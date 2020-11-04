@@ -16,11 +16,14 @@ class RenderSliverStickyHeader extends RenderSliver with RenderSliverHelpers {
     RenderSliver child,
     bool overlapsContent: false,
     bool sticky: true,
+    bool reverse: true,
     StickyHeaderController controller,
   })  : assert(overlapsContent != null),
         assert(sticky != null),
+        assert(reverse != null),
         _overlapsContent = overlapsContent,
         _sticky = sticky,
+        _reverse = reverse,
         _controller = controller {
     this.header = header;
     this.child = child;
@@ -45,6 +48,15 @@ class RenderSliverStickyHeader extends RenderSliver with RenderSliverHelpers {
     assert(value != null);
     if (_sticky == value) return;
     _sticky = value;
+    markNeedsLayout();
+  }
+
+  bool get reverse => _reverse;
+  bool _reverse;
+  set reverse(bool value) {
+    assert(value != null);
+    if (_reverse == value) return;
+    _reverse = value;
     markNeedsLayout();
   }
 
@@ -147,6 +159,8 @@ class RenderSliverStickyHeader extends RenderSliver with RenderSliverHelpers {
     AxisDirection axisDirection = applyGrowthDirectionToAxisDirection(
         constraints.axisDirection, constraints.growthDirection);
 
+    if (reverse) axisDirection = flipAxisDirection(axisDirection);
+
     if (header != null) {
       header.layout(
         BoxValueConstraints<SliverStickyHeaderState>(
@@ -160,9 +174,9 @@ class RenderSliverStickyHeader extends RenderSliver with RenderSliverHelpers {
 
     // Compute the header extent only one time.
     double headerExtent = headerLogicalExtent;
-    final double headerPaintExtent =
+    double headerPaintExtent =
         calculatePaintOffset(constraints, from: 0.0, to: headerExtent);
-    final double headerCacheExtent =
+    double headerCacheExtent =
         calculateCacheOffset(constraints, from: 0.0, to: headerExtent);
 
     if (child == null) {
@@ -220,18 +234,19 @@ class RenderSliverStickyHeader extends RenderSliver with RenderSliverHelpers {
       final SliverPhysicalParentData childParentData = child.parentData;
       assert(constraints.axisDirection != null);
       assert(constraints.growthDirection != null);
+
+      final double childStartOffset =
+          reverse ? headerExtent : headerPaintExtent;
+
       switch (axisDirection) {
         case AxisDirection.up:
           childParentData.paintOffset = Offset.zero;
           break;
         case AxisDirection.right:
-          childParentData.paintOffset = Offset(
-              calculatePaintOffset(constraints, from: 0.0, to: headerExtent),
-              0.0);
+          childParentData.paintOffset = Offset(childStartOffset, 0.0);
           break;
         case AxisDirection.down:
-          childParentData.paintOffset = Offset(0.0,
-              calculatePaintOffset(constraints, from: 0.0, to: headerExtent));
+          childParentData.paintOffset = Offset(0.0, childStartOffset);
           break;
         case AxisDirection.left:
           childParentData.paintOffset = Offset.zero;

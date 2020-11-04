@@ -155,6 +155,7 @@ class SliverStickyHeader extends RenderObjectWidget {
     this.sliver,
     this.overlapsContent: false,
     this.sticky = true,
+    this.reverse = false,
     this.controller,
   })  : assert(overlapsContent != null),
         assert(sticky != null),
@@ -200,6 +201,10 @@ class SliverStickyHeader extends RenderObjectWidget {
   /// Defaults to true.
   final bool sticky;
 
+  /// Reverse the header.
+  /// Defaults to false.
+  final bool reverse;
+
   /// The controller used to interact with this sliver.
   ///
   /// If a [StickyHeaderController] is not provided, then the value of [DefaultStickyHeaderController.of]
@@ -209,10 +214,10 @@ class SliverStickyHeader extends RenderObjectWidget {
   @override
   RenderSliverStickyHeader createRenderObject(BuildContext context) {
     return RenderSliverStickyHeader(
-      overlapsContent: overlapsContent,
-      sticky: sticky,
-      controller: controller ?? DefaultStickyHeaderController.of(context),
-    );
+        overlapsContent: overlapsContent,
+        sticky: sticky,
+        controller: controller ?? DefaultStickyHeaderController.of(context),
+        reverse: reverse);
   }
 
   @override
@@ -227,7 +232,8 @@ class SliverStickyHeader extends RenderObjectWidget {
     renderObject
       ..overlapsContent = overlapsContent
       ..sticky = sticky
-      ..controller = controller ?? DefaultStickyHeaderController.of(context);
+      ..controller = controller ?? DefaultStickyHeaderController.of(context)
+      ..reverse = reverse;
   }
 }
 
@@ -253,9 +259,11 @@ class SliverStickyHeaderBuilder extends StatelessWidget {
     this.overlapsContent: false,
     this.sticky = true,
     this.controller,
+    this.reverse: false,
   })  : assert(builder != null),
         assert(overlapsContent != null),
         assert(sticky != null),
+        assert(reverse != null),
         super(key: key);
 
   /// Called to build the [SliverStickyHeader]'s header.
@@ -275,6 +283,10 @@ class SliverStickyHeaderBuilder extends StatelessWidget {
   /// Defaults to true.
   final bool sticky;
 
+  /// Reverse the header.
+  /// Defaults to false.
+  final bool reverse;
+
   /// The controller used to interact with this sliver.
   ///
   /// If a [StickyHeaderController] is not provided, then the value of [DefaultStickyHeaderController.of]
@@ -287,6 +299,7 @@ class SliverStickyHeaderBuilder extends StatelessWidget {
       overlapsContent: overlapsContent,
       sliver: sliver,
       sticky: sticky,
+      reverse: reverse,
       controller: controller,
       header: ValueLayoutBuilder<SliverStickyHeaderState>(
         builder: (context, constraints) => builder(context, constraints.value),
