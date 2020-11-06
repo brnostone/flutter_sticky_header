@@ -43,6 +43,7 @@ class _StickyHeaderList extends StatelessWidget {
               child: Text('$index'),
             ),
             title: Text('List tile #$i'),
+            onTap: () => print('List tile #$i'),
           ),
           childCount: 6,
         ),

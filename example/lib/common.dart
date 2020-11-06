@@ -67,14 +67,17 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      color: color,
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
-      alignment: Alignment.centerLeft,
-      child: Text(
-        title ?? 'Header #$index',
-        style: const TextStyle(color: Colors.white),
+    return InkWell(
+      onTap: () => print('Header #$index'),
+      child: Container(
+        height: 60,
+        color: color,
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        alignment: Alignment.centerLeft,
+        child: Text(
+          title ?? 'Header #$index',
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
     );
   }
