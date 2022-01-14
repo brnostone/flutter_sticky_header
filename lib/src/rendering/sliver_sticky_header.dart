@@ -312,17 +312,18 @@ class RenderSliverStickyHeader extends RenderSliver with RenderSliverHelpers {
 
   @override
   bool hitTestChildren(SliverHitTestResult result,
-      {@required double mainAxisPosition, @required double crossAxisPosition}) {
-    assert(geometry.hitTestExtent > 0.0);
+      {required double mainAxisPosition, required double crossAxisPosition}) {
+    assert(geometry!.hitTestExtent > 0.0);
 
     final hitHeader = (reverse)
-        ? mainAxisPosition - constraints.overlap >= child.geometry.hitTestExtent
-        : mainAxisPosition - constraints.overlap <= _headerExtent;
+        ? mainAxisPosition - constraints.overlap >=
+            child!.geometry!.hitTestExtent
+        : mainAxisPosition - constraints.overlap <= _headerExtent!;
 
     if (header != null && hitHeader) {
       final hitBoxChild = hitTestBoxChild(
         BoxHitTestResult.wrap(SliverHitTestResult.wrap(result)),
-        header,
+        header!,
         mainAxisPosition: mainAxisPosition - constraints.overlap,
         crossAxisPosition: crossAxisPosition,
       );
@@ -331,15 +332,15 @@ class RenderSliverStickyHeader extends RenderSliver with RenderSliverHelpers {
 
       if (_overlapsContent &&
           child != null &&
-          child.geometry.hitTestExtent > 0.0) {
-        return child.hitTest(
+          child!.geometry!.hitTestExtent > 0.0) {
+        return child!.hitTest(
           result,
           mainAxisPosition: mainAxisPosition - childMainAxisPosition(child),
           crossAxisPosition: crossAxisPosition,
         );
       }
-    } else if (child != null && child.geometry.hitTestExtent > 0.0) {
-      return child.hitTest(result,
+    } else if (child != null && child!.geometry!.hitTestExtent > 0.0) {
+      return child!.hitTest(result,
           mainAxisPosition:
               mainAxisPosition - ((reverse) ? 0 : childMainAxisPosition(child)),
           crossAxisPosition: crossAxisPosition);
