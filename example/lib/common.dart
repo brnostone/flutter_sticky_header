@@ -67,8 +67,10 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => print('Header #$index'),
+    return GestureDetector(
+      onTap: () {
+        print('hit $index');
+      },
       child: Container(
         height: 60,
         color: color,

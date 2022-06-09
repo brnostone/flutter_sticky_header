@@ -58,6 +58,7 @@ class RenderSliverStickyHeader extends RenderSliver with RenderSliverHelpers {
   StickyHeaderController? get controller => _controller;
   StickyHeaderController? _controller;
 
+
   set controller(StickyHeaderController? value) {
     if (_controller == value) return;
     if (_controller != null && value != null) {
@@ -283,7 +284,7 @@ class RenderSliverStickyHeader extends RenderSliver with RenderSliverHelpers {
           _oldState = state;
           header!.layout(
             BoxValueConstraints<SliverStickyHeaderState?>(
-              value: _oldState,
+              value: _oldState!,
               constraints: constraints.asBoxConstraints(),
             ),
             parentUsesSize: true,
@@ -317,7 +318,7 @@ class RenderSliverStickyHeader extends RenderSliver with RenderSliverHelpers {
 
     final hitHeader = (reverse)
         ? mainAxisPosition - constraints.overlap >=
-            child!.geometry!.hitTestExtent
+        child!.geometry!.hitTestExtent
         : mainAxisPosition - constraints.overlap <= _headerExtent!;
 
     if (header != null && hitHeader) {
@@ -342,7 +343,7 @@ class RenderSliverStickyHeader extends RenderSliver with RenderSliverHelpers {
     } else if (child != null && child!.geometry!.hitTestExtent > 0.0) {
       return child!.hitTest(result,
           mainAxisPosition:
-              mainAxisPosition - ((reverse) ? 0 : childMainAxisPosition(child)),
+          mainAxisPosition - ((reverse) ? 0 : childMainAxisPosition(child)),
           crossAxisPosition: crossAxisPosition);
     }
     return false;
