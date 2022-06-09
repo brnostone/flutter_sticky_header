@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_sticky_header/src/rendering/sliver_sticky_header.dart';
 import 'package:value_layout_builder/value_layout_builder.dart';
@@ -256,7 +257,7 @@ class SliverStickyHeaderBuilder extends StatelessWidget {
     this.sticky = true,
     this.controller,
     this.reverse: false,
-  })  :  super(key: key);
+  }) : super(key: key);
 
   /// Called to build the [SliverStickyHeader]'s header.
   ///

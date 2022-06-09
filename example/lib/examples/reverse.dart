@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 
 import '../common.dart';
@@ -42,7 +43,10 @@ class _StickyHeaderList extends StatelessWidget {
             leading: CircleAvatar(
               child: Text('$index'),
             ),
-            title: Text('List tile #$i'),
+            title: Linkify(
+              text: 'List tile #$i http://www.google.com/$i',
+              onOpen: (link) => print(">>> " + link.url),
+            ),
             onTap: () => print('List tile #$i'),
           ),
           childCount: 6,
